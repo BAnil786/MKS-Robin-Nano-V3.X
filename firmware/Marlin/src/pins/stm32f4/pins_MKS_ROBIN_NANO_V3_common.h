@@ -262,13 +262,13 @@
 #define EXP1_10_PIN                         PC5
 
 #define EXP2_03_PIN                         -1    // RESET
-#define EXP2_04_PIN                         PE12
-#define EXP2_05_PIN                         PA7
+#define EXP2_04_PIN                         PE12  // SPI1 RS
+#define EXP2_05_PIN                         PA7  // SPI1 MOSI
 #define EXP2_06_PIN                         PE11
-#define EXP2_07_PIN                         PE10
+#define EXP2_07_PIN                         PE10 // SPI1 CS
 #define EXP2_08_PIN                         PE8
-#define EXP2_09_PIN                         PA5
-#define EXP2_10_PIN                         PA6
+#define EXP2_09_PIN                         PA5  // SPI1 SCK
+#define EXP2_10_PIN                         PA6  // SPI1 MISO
 
 //
 // SPI SD Card
