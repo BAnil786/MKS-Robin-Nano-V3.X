@@ -29,7 +29,7 @@
 // #define MKS_TEST
 
 // USB Flash Drive support
-#define HAS_OTG_USB_HOST_SUPPORT
+#define HAS_OTG_USB_HOST_SUPPORT // OTG_HS_DM (PB14) and OTG_HAS_DP (PB14) USD DISK
 
 // Avoid conflict with TIMER_TONE
 #define STEP_TIMER                            10
