@@ -107,6 +107,8 @@
   // Software serial
   // No Hardware serial for steppers
   //
+  // SPI pins TMC_SCK1 (PD0) TMC_MISO1 (PD1) TMC_MOSI1 (PD14) in connection with below pins for UART
+
   #define X_SERIAL_TX_PIN                   PD5
   #define X_SERIAL_RX_PIN        X_SERIAL_TX_PIN
 
