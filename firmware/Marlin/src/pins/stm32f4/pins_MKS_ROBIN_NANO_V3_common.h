@@ -235,6 +235,7 @@
   #define HAS_SPI_FLASH                        1
   #define SPI_DEVICE                           2
   #define SPI_FLASH_SIZE               0x1000000
+  // SPI 2 pins overlap with MKS WIFI module SPI
   #define SPI_FLASH_CS_PIN                  PB12
   #define SPI_FLASH_MOSI_PIN                PC3
   #define SPI_FLASH_MISO_PIN                PC2
