@@ -40,6 +40,7 @@
 #if EITHER(NO_EEPROM_SELECTED, I2C_EEPROM)
   #define I2C_EEPROM
   #define MARLIN_EEPROM_SIZE              0x1000  // 4KB
+  // I2C pins SCL (PB6) and SDA (PB7) to AT4C32D
   #define I2C_SCL_PIN                       PB6
   #define I2C_SDA_PIN                       PB7
 #endif
