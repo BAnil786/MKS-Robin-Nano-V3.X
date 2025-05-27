@@ -221,6 +221,7 @@
 // detect pin doesn't work when ONBOARD and NO_SD_HOST_DRIVE disabled
 #if SD_CONNECTION_IS(ONBOARD)
   #define ENABLE_SPI3
+  // SPI3 pins as below
   #define SD_SS_PIN                         -1
   #define SDSS                              PC9
   #define SD_SCK_PIN                        PC10
