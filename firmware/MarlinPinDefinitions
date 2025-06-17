@@ -29,6 +29,9 @@ Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
 // -------------------------------------------------- //
 Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
 
+  I2C_SCL_PIN PB6 // I2C PINS AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
+  I2C_SDA_PIN PB7 // I2C PINS AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
+
   SERVO0_PIN PA8 // ENABLE FOR BLTOUCH SERVO
 
   X_DIAG_PIN  PA15 // ALSO ASSIGNED TO X_STOP_PIN
