@@ -1,3 +1,85 @@
+ini/stm32f4.ini
+
+  #
+  # MKS Robin Nano V3
+  #
+  [env:mks_robin_nano_v3]
+  extends                     = stm32_variant
+  board                       = marlin_STM32F407VGT6_CCM
+  board_build.variant         = MARLIN_F4x7Vx                 // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx
+  board_build.offset          = 0xC000
+  board_upload.offset_address = 0x0800C000
+  board_build.rename          = Robin_nano_v3.bin
+  build_flags                 = ${stm32_variant.build_flags} ${stm32f4_I2C1.build_flags}
+                                -DHAL_PCD_MODULE_ENABLED
+  debug_tool                  = jlink
+  upload_protocol             = jlink
+  
+  #
+  # MKS Robin Nano V3 with USB Flash Drive Support
+  #
+  [env:mks_robin_nano_v3_usb_flash_drive]
+  extends           = env:mks_robin_nano_v3
+  platform_packages = ${stm_flash_drive.platform_packages}
+  build_flags       = ${stm_flash_drive.build_flags} ${stm32f4_I2C1.build_flags}
+                      -DUSE_USBHOST_HS
+                      -DUSBD_IRQ_PRIO=5
+                      -DUSBD_IRQ_SUBPRIO=6
+                      -DUSE_USB_HS_IN_FS
+  
+  #
+  # MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
+  #
+  [env:mks_robin_nano_v3_usb_flash_drive_msc]
+  extends           = env:mks_robin_nano_v3_usb_flash_drive
+  build_flags       = ${env:mks_robin_nano_v3_usb_flash_drive.build_flags}
+                      -DUSBD_USE_CDC_MSC
+  build_unflags     = ${env:mks_robin_nano_v3_usb_flash_drive.build_unflags}
+                      -DUSBD_USE_CDC
+
+  #
+  # MKS Robin Nano V3_1
+  #
+  [env:mks_robin_nano_v3_1]
+  extends           = env:mks_robin_nano_v3
+  board             = marlin_STM32F407VET6_CCM
+  
+  #
+  # MKS Robin Nano V3.1 with USB Flash Drive Support
+  #
+  [env:mks_robin_nano_v3_1_usb_flash_drive]
+  extends           = env:mks_robin_nano_v3_usb_flash_drive
+  board             = marlin_STM32F407VET6_CCM
+  
+  #
+  # MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
+  #
+  [env:mks_robin_nano_v3_1_usb_flash_drive_msc]
+  extends           = env:mks_robin_nano_v3_usb_flash_drive_msc
+  board             = marlin_STM32F407VET6_CCM
+
+// -------------------------------------------------- //
+buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx\PeripheralPins.c
+
+//*** USB ***
+
+    #ifdef HAL_PCD_MODULE_ENABLED
+    WEAK const PinMap PinMap_USB_OTG_FS[] = {
+      {PA_11, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DM
+      {PA_12, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DP
+      {NC,    NP,    0}
+    };
+    
+    WEAK const PinMap PinMap_USB_OTG_HS[] = {
+    #ifdef USE_USB_HS_IN_FS
+      {PB_14, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DM
+      {PB_15, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DP
+    #endif /* USE_USB_HS_IN_FS */
+      {NC,    NP,    0}
+    };
+    #endif
+
+// -------------------------------------------------- //
 Marlin/src/HAL/STM32/HardwareSerial.cpp
 // USART/UART PIN MAPPING FOR STM32F0/F1/F2/F4/F7
   PIN_SERIAL1_TX  PA9  // WIFI TX1 - HAL_HardwareSerial if (peripheral == USART1)
