@@ -1,111 +1,107 @@
-## ini/stm32f4.ini
+### ini/stm32f4.ini
 
 
 >   MKS Robin Nano V3 <br/>
 
-&nbsp;&nbsp;&nbsp;&nbsp; [env:mks_robin_nano_v3]<br/>
-&nbsp;&nbsp;&nbsp;&nbsp; extends                     = stm32_variant<br/>
-&nbsp;&nbsp;&nbsp;&nbsp; board                       = marlin_STM32F407VGT6_CCM<br/>
-&nbsp;&nbsp;&nbsp;&nbsp; board_build.variant         = MARLIN_F4x7Vx                 // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;board_build.offset          = 0xC000<br/>
-  &nbsp;&nbsp; board_upload.offset_address = 0x0800C000<br/>
-  &nbsp;&nbsp; board_build.rename          = Robin_nano_v3.bin<br/>
-  &nbsp;&nbsp; build_flags                 = $ \{stm32_variant.build_flags\} $\{stm32f4_I2C1.build_flags\} <br/>
+[env:mks_robin_nano_v3]<br/>
+extends                     = stm32_variant<br/>
+board                       = marlin_STM32F407VGT6_CCM<br/>
+board_build.variant         = MARLIN_F4x7Vx // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx<br/>
+board_build.offset          = 0xC000<br/>
+board_upload.offset_address = 0x0800C000<br/>
+board_build.rename          = Robin_nano_v3.bin<br/>
+build_flags                 = $ \{stm32_variant.build_flags\} $\{stm32f4_I2C1.build_flags\} <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                               -DHAL_PCD_MODULE_ENABLED<br/>
-  &nbsp;&nbsp; debug_tool                  = jlink<br/>
-  &nbsp;&nbsp; upload_protocol             = jlink<br/>
+debug_tool                  = jlink<br/>
+upload_protocol             = jlink<br/>
   
   > MKS Robin Nano V3 with USB Flash Drive Support<br/>
   
   [env:mks_robin_nano_v3_usb_flash_drive]<br/>
   extends           = env:mks_robin_nano_v3<br/>
-  platform_packages = ${stm_flash_drive.platform_packages}<br/>
+  platform_packages = $\{stm_flash_drive.platform_packages}<br/>
   build_flags       = $\{stm_flash_drive.build_flags} $\{stm32f4_I2C1.build_flags}<br/>
-                      -DUSE_USBHOST_HS<br/>
-                      -DUSBD_IRQ_PRIO=5<br/>
-                      -DUSBD_IRQ_SUBPRIO=6<br/>
-                      -DUSE_USB_HS_IN_FS<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                     -DUSE_USBHOST_HS<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_IRQ_PRIO=5<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_IRQ_SUBPRIO=6<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSE_USB_HS_IN_FS<br/>
   
-  #
-  # MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
-  #
-  [env:mks_robin_nano_v3_usb_flash_drive_msc]
-  extends           = env:mks_robin_nano_v3_usb_flash_drive
-  build_flags       = ${env:mks_robin_nano_v3_usb_flash_drive.build_flags}
-                      -DUSBD_USE_CDC_MSC
-  build_unflags     = ${env:mks_robin_nano_v3_usb_flash_drive.build_unflags}
-                      -DUSBD_USE_CDC
 
-  #
-  # MKS Robin Nano V3_1
-  #
-  [env:mks_robin_nano_v3_1]
-  extends           = env:mks_robin_nano_v3
-  board             = marlin_STM32F407VET6_CCM
+> MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
+ 
+[env:mks_robin_nano_v3_usb_flash_drive_msc]<br/>
+extends           = env:mks_robin_nano_v3_usb_flash_drive<br/>
+build_flags       = $\{env:mks_robin_nano_v3_usb_flash_drive.build_flags}<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_USE_CDC_MSC<br/>
+build_unflags     = $\{env:mks_robin_nano_v3_usb_flash_drive.build_unflags}<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_USE_CDC<br/>
+
+> MKS Robin Nano V3_1
+
+[env:mks_robin_nano_v3_1]<br/>
+extends           = env:mks_robin_nano_v3<br/>
+board             = marlin_STM32F407VET6_CCM<br/>
   
-  #
-  # MKS Robin Nano V3.1 with USB Flash Drive Support
-  #
-  [env:mks_robin_nano_v3_1_usb_flash_drive]
-  extends           = env:mks_robin_nano_v3_usb_flash_drive
-  board             = marlin_STM32F407VET6_CCM
-  
-  #
-  # MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
-  #
-  [env:mks_robin_nano_v3_1_usb_flash_drive_msc]
-  extends           = env:mks_robin_nano_v3_usb_flash_drive_msc
-  board             = marlin_STM32F407VET6_CCM
+ > MKS Robin Nano V3.1 with USB Flash Drive Support
+ 
+[env:mks_robin_nano_v3_1_usb_flash_drive]
+extends           = env:mks_robin_nano_v3_usb_flash_drive
+board             = marlin_STM32F407VET6_CCM
 
-// -------------------------------------------------- //
-buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx\PeripheralPins.c
+> MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
 
-//*** USB ***
+[env:mks_robin_nano_v3_1_usb_flash_drive_msc]<br/>
+extends           = env:mks_robin_nano_v3_usb_flash_drive_msc<br/>
+board             = marlin_STM32F407VET6_CCM<br/>
+
+### buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx\PeripheralPins.c
+
+>*** USB ***
 
     #ifdef HAL_PCD_MODULE_ENABLED
-    WEAK const PinMap PinMap_USB_OTG_FS[] = {
-      {PA_11, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DM
-      {PA_12, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DP
-      {NC,    NP,    0}
+       WEAK const PinMap PinMap_USB_OTG_FS[] = {
+         {PA_11, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DM
+         {PA_12, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DP
+         {NC,    NP,    0}
     };
     
-    WEAK const PinMap PinMap_USB_OTG_HS[] = {
-    #ifdef USE_USB_HS_IN_FS
-      {PB_14, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DM
-      {PB_15, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DP
-    #endif /* USE_USB_HS_IN_FS */
-      {NC,    NP,    0}
+       WEAK const PinMap PinMap_USB_OTG_HS[] = {
+          #ifdef USE_USB_HS_IN_FS
+             {PB_14, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DM
+             {PB_15, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DP
+          #endif /* USE_USB_HS_IN_FS */
+          {NC,    NP,    0}
     };
     #endif
 
-// -------------------------------------------------- //
-Marlin/src/HAL/STM32/HardwareSerial.cpp
-// USART/UART PIN MAPPING FOR STM32F0/F1/F2/F4/F7
-  PIN_SERIAL1_TX  PA9  // WIFI TX1 - HAL_HardwareSerial if (peripheral == USART1)
-  PIN_SERIAL1_RX  PA10 // WIFI RX1
-  PIN_SERIAL2_TX  PA2  // USART2
-  PIN_SERIAL2_RX  PA3  // USART2
-  PIN_SERIAL3_TX  PB10 // USART3 -- ACTIVE IN J2
-  PIN_SERIAL3_RX  PB11 // USART3 -- ACTIVE IN J2
-  PIN_SERIAL4_TX  PC10 // USART4
-  PIN_SERIAL4_RX  PC11 // USART4
-  PIN_SERIAL5_TX  PC12 // USART5
-  PIN_SERIAL5_RX  PD2  // USART5
-  PIN_SERIAL6_TX  PC6  // USART6
-  PIN_SERIAL6_RX  PC7  // USART6
 
-// -------------------------------------------------- //
-Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
+### Marlin/src/HAL/STM32/HardwareSerial.cpp
+> // USART/UART PIN MAPPING FOR STM32F0/F1/F2/F4/F7
+  
+  PIN_SERIAL1_TX  PA9  // WIFI TX1 - HAL_HardwareSerial if (peripheral == USART1)<br/>
+  PIN_SERIAL1_RX  PA10 // WIFI RX1<br/>
+  PIN_SERIAL2_TX  PA2  // USART2<br/>
+  PIN_SERIAL2_RX  PA3  // USART2<br/>
+  PIN_SERIAL3_TX  PB10 // USART3 -- ACTIVE IN J2<br/>
+  PIN_SERIAL3_RX  PB11 // USART3 -- ACTIVE IN J2<br/>
+  PIN_SERIAL4_TX  PC10 // USART4<br/>
+  PIN_SERIAL4_RX  PC11 // USART4<br/>
+  PIN_SERIAL5_TX  PC12 // USART5<br/>
+  PIN_SERIAL5_RX  PD2  // USART5<br/>
+  PIN_SERIAL6_TX  PC6  // USART6<br/>
+  PIN_SERIAL6_RX  PC7  // USART6<br/>
 
-  X_CS_PIN  PD5 // TMC SPI CHIP SELECT FOR X AXIS  
-  Y_CS_PIN  PD7 // TMC SPI CHIP SELECT FOR Y AXIS
-  Z_CS_PIN  PD4 // TMC SPI CHIP SELECT FOR Z AXIS
-  E0_CS_PIN PD9 // TMC SPI CHIP SELECT FOR E0 AXIS
-  E1_CS_PIN PD8 // TMC SPI CHIP SELECT FOR E1 AXIS
+### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
 
-  TMC_SPI_MOSI PD14 // MOSI FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  TMC_SPI_MISO PD1  // MISO FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  TMC_SPI_SCK  PD0  // SCK FOR TMC SPI IF HAS_TMC_SPI  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
+  X_CS_PIN  PD5 // TMC SPI CHIP SELECT FOR X AXIS  <br/>
+  Y_CS_PIN  PD7 // TMC SPI CHIP SELECT FOR Y AXIS<br/>
+  Z_CS_PIN  PD4 // TMC SPI CHIP SELECT FOR Z AXIS<br/>
+  E0_CS_PIN PD9 // TMC SPI CHIP SELECT FOR E0 AXIS<br/>
+  E1_CS_PIN PD8 // TMC SPI CHIP SELECT FOR E1 AXIS<br/>
+
+  TMC_SPI_MOSI PD14 // MOSI FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
+  TMC_SPI_MISO PD1  // MISO FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
+  TMC_SPI_SCK  PD0  // SCK FOR TMC SPI IF HAS_TMC_SPI  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
 
 // -------------------------------------------------- //
 Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
