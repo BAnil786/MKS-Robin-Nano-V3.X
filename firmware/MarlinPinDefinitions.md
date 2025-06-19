@@ -1,31 +1,30 @@
 ## ini/stm32f4.ini
 
-  //<br/>
-  // MKS Robin Nano V3 <br/>
-  //
-  [env:mks_robin_nano_v3]
-  extends                     = stm32_variant
-  board                       = marlin_STM32F407VGT6_CCM
-  board_build.variant         = MARLIN_F4x7Vx                 // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx
-  board_build.offset          = 0xC000
-  board_upload.offset_address = 0x0800C000
-  board_build.rename          = Robin_nano_v3.bin
-  build_flags                 = ${stm32_variant.build_flags} ${stm32f4_I2C1.build_flags}
-                                -DHAL_PCD_MODULE_ENABLED
-  debug_tool                  = jlink
-  upload_protocol             = jlink
+
+>   MKS Robin Nano V3 <br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp; [env:mks_robin_nano_v3]<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; extends                     = stm32_variant<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; board                       = marlin_STM32F407VGT6_CCM<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; board_build.variant         = MARLIN_F4x7Vx                 // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;board_build.offset          = 0xC000<br/>
+  &nbsp;&nbsp; board_upload.offset_address = 0x0800C000<br/>
+  &nbsp;&nbsp; board_build.rename          = Robin_nano_v3.bin<br/>
+  &nbsp;&nbsp; build_flags                 = $ \{stm32_variant.build_flags\} $\{stm32f4_I2C1.build_flags\} <br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                               -DHAL_PCD_MODULE_ENABLED<br/>
+  &nbsp;&nbsp; debug_tool                  = jlink<br/>
+  &nbsp;&nbsp; upload_protocol             = jlink<br/>
   
-  #
-  # MKS Robin Nano V3 with USB Flash Drive Support
-  #
-  [env:mks_robin_nano_v3_usb_flash_drive]
-  extends           = env:mks_robin_nano_v3
-  platform_packages = ${stm_flash_drive.platform_packages}
-  build_flags       = ${stm_flash_drive.build_flags} ${stm32f4_I2C1.build_flags}
-                      -DUSE_USBHOST_HS
-                      -DUSBD_IRQ_PRIO=5
-                      -DUSBD_IRQ_SUBPRIO=6
-                      -DUSE_USB_HS_IN_FS
+  > MKS Robin Nano V3 with USB Flash Drive Support<br/>
+  
+  [env:mks_robin_nano_v3_usb_flash_drive]<br/>
+  extends           = env:mks_robin_nano_v3<br/>
+  platform_packages = ${stm_flash_drive.platform_packages}<br/>
+  build_flags       = $\{stm_flash_drive.build_flags} $\{stm32f4_I2C1.build_flags}<br/>
+                      -DUSE_USBHOST_HS<br/>
+                      -DUSBD_IRQ_PRIO=5<br/>
+                      -DUSBD_IRQ_SUBPRIO=6<br/>
+                      -DUSE_USB_HS_IN_FS<br/>
   
   #
   # MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
