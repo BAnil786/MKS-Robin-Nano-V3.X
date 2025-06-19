@@ -1,8 +1,8 @@
 ## ini/stm32f4.ini
 
-  #
-  # MKS Robin Nano V3
-  #
+  //
+  // MKS Robin Nano V3
+  //
   [env:mks_robin_nano_v3]
   extends                     = stm32_variant
   board                       = marlin_STM32F407VGT6_CCM
