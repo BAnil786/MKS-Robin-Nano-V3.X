@@ -56,19 +56,18 @@ board             = marlin_STM32F407VET6_CCM<br/>
 
 ### buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx\PeripheralPins.c
 
->*** USB ***
-
+    // *** USB ***
     #ifdef HAL_PCD_MODULE_ENABLED
        WEAK const PinMap PinMap_USB_OTG_FS[] = {
-         {PA_11, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DM
-         {PA_12, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DP
+         {PA_11, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DM linked to USB
+         {PA_12, USB_OTG_FS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF10_OTG_FS)}, // USB_OTG_FS_DP linked to USB
          {NC,    NP,    0}
     };
     
        WEAK const PinMap PinMap_USB_OTG_HS[] = {
           #ifdef USE_USB_HS_IN_FS
-             {PB_14, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DM
-             {PB_15, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DP
+             {PB_14, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DM linked to USB DISK
+             {PB_15, USB_OTG_HS, STM_PIN_DATA(STM_MODE_AF_PP, GPIO_PULLUP, GPIO_AF12_OTG_HS_FS)}, // USB_OTG_HS_DP linked to USB DISK
           #endif /* USE_USB_HS_IN_FS */
           {NC,    NP,    0}
     };
@@ -76,20 +75,50 @@ board             = marlin_STM32F407VET6_CCM<br/>
 
 
 ### Marlin/src/HAL/STM32/HardwareSerial.cpp
-> // USART/UART PIN MAPPING FOR STM32F0/F1/F2/F4/F7
-  
-  PIN_SERIAL1_TX  PA9  // WIFI TX1 - HAL_HardwareSerial if (peripheral == USART1)<br/>
-  PIN_SERIAL1_RX  PA10 // WIFI RX1<br/>
-  PIN_SERIAL2_TX  PA2  // USART2<br/>
-  PIN_SERIAL2_RX  PA3  // USART2<br/>
-  PIN_SERIAL3_TX  PB10 // USART3 -- ACTIVE IN J2<br/>
-  PIN_SERIAL3_RX  PB11 // USART3 -- ACTIVE IN J2<br/>
-  PIN_SERIAL4_TX  PC10 // USART4<br/>
-  PIN_SERIAL4_RX  PC11 // USART4<br/>
-  PIN_SERIAL5_TX  PC12 // USART5<br/>
-  PIN_SERIAL5_RX  PD2  // USART5<br/>
-  PIN_SERIAL6_TX  PC6  // USART6<br/>
-  PIN_SERIAL6_RX  PC7  // USART6<br/>
+	// USART/UART PIN MAPPING FOR STM32F0/F1/F2/F4/F7
+	// USART1
+	#ifndef PIN_SERIAL1_TX
+	 #define PIN_SERIAL1_TX  PA9 // USART1 Connected to TX1 in WiFi module
+	#endif
+	#ifndef PIN_SERIAL1_RX
+	 #define PIN_SERIAL1_RX  PA10 // USART1 Connected to RX1 in WiFi module
+	#endif
+	// USART2 not used/overridden
+	#ifndef PIN_SERIAL2_TX
+	  #define PIN_SERIAL2_TX  PA2 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as PIN FOR HOTEND 2 SENSOR
+	#endif
+	#ifndef PIN_SERIAL2_RX
+	 #define PIN_SERIAL2_RX  PA3 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as PIN FOR E1 ENABLE
+	#endif
+	// USART 3
+	// exposed in J2
+	// if MKS_WIFI_MODULE is not ENABLED it is assigned to WIFI_SERIAL_PORT
+	#ifndef PIN_SERIAL3_TX
+	 #define PIN_SERIAL3_TX  PB10
+	#endif
+	#ifndef PIN_SERIAL3_RX
+	  #define PIN_SERIAL3_RX  PB11
+	#endif
+	// USART4 not used/overridden
+	#ifndef PIN_SERIAL4_TX
+	  #define PIN_SERIAL4_TX  PC10 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as SD_SCK_PIN IF SD_CONNECTION_IS(ONBOARD)
+	#endif
+	#ifndef PIN_SERIAL4_RX
+	  #define PIN_SERIAL4_RX  PC11 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as SD_MISO_PIN IF SD_CONNECTION_IS(ONBOARD)
+	#endif
+	#ifndef PIN_SERIAL5_TX
+	  #define PIN_SERIAL5_TX  PC12 // USART5
+	#endif
+	#ifndef PIN_SERIAL5_RX
+	  #define PIN_SERIAL5_RX  PD2 // USART5
+	#endif
+	#ifndef PIN_SERIAL6_TX
+	  #define PIN_SERIAL6_TX  PC6 // USART6
+	#endif
+	#ifndef PIN_SERIAL6_RX
+	  #define PIN_SERIAL6_RX  PC7 // USART6
+	#endif
+
 
 ### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
 
