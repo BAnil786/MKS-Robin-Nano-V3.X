@@ -44,8 +44,8 @@ board             = marlin_STM32F407VET6_CCM<br/>
   
  > MKS Robin Nano V3.1 with USB Flash Drive Support
  
-[env:mks_robin_nano_v3_1_usb_flash_drive]
-extends           = env:mks_robin_nano_v3_usb_flash_drive
+[env:mks_robin_nano_v3_1_usb_flash_drive]<br/>
+extends           = env:mks_robin_nano_v3_usb_flash_drive<br/>
 board             = marlin_STM32F407VET6_CCM
 
 > MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
@@ -92,7 +92,7 @@ board             = marlin_STM32F407VET6_CCM<br/>
 	#endif
 	// USART 3
 	// exposed in J2
-	// if MKS_WIFI_MODULE is not ENABLED it is assigned to WIFI_SERIAL_PORT
+	// if MKS_WIFI_MODULE is not ENABLED then USART3 is assigned to WIFI_SERIAL_PORT
 	#ifndef PIN_SERIAL3_TX
 	 #define PIN_SERIAL3_TX  PB10
 	#endif
@@ -106,37 +106,33 @@ board             = marlin_STM32F407VET6_CCM<br/>
 	#ifndef PIN_SERIAL4_RX
 	  #define PIN_SERIAL4_RX  PC11 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as SD_MISO_PIN IF SD_CONNECTION_IS(ONBOARD)
 	#endif
+	// USART5 not used/overridden
 	#ifndef PIN_SERIAL5_TX
-	  #define PIN_SERIAL5_TX  PC12 // USART5
+	  #define PIN_SERIAL5_TX  PC12 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as SD_MOSI_PIN IF SD_CONNECTION_IS(ONBOARD)
 	#endif
 	#ifndef PIN_SERIAL5_RX
-	  #define PIN_SERIAL5_RX  PD2 // USART5
+	  #define PIN_SERIAL5_RX  PD2 // overriden in pins_MKS_ROBIN_NANO_V3_common.h as Y_STOP_PIN
 	#endif
+	// USART6
 	#ifndef PIN_SERIAL6_TX
-	  #define PIN_SERIAL6_TX  PC6 // USART6
+	  #define PIN_SERIAL6_TX  PC6 // overriden in pins_MKS_ROBIN_NANO_V3_common.h LCD_RS
 	#endif
 	#ifndef PIN_SERIAL6_RX
-	  #define PIN_SERIAL6_RX  PC7 // USART6
+	  #define PIN_SERIAL6_RX  PC7 // overriden in pins_MKS_ROBIN_NANO_V3_common.h WIFI_IO1_PIN
 	#endif
 
 
-### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
+### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
 
-  X_CS_PIN  PD5 // TMC SPI CHIP SELECT FOR X AXIS  <br/>
-  Y_CS_PIN  PD7 // TMC SPI CHIP SELECT FOR Y AXIS<br/>
-  Z_CS_PIN  PD4 // TMC SPI CHIP SELECT FOR Z AXIS<br/>
-  E0_CS_PIN PD9 // TMC SPI CHIP SELECT FOR E0 AXIS<br/>
-  E1_CS_PIN PD8 // TMC SPI CHIP SELECT FOR E1 AXIS<br/>
 
-  TMC_SPI_MOSI PD14 // MOSI FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
-  TMC_SPI_MISO PD1  // MISO FOR TMC SPI IF HAS_TMC_SPI ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
-  TMC_SPI_SCK  PD0  // SCK FOR TMC SPI IF HAS_TMC_SPI  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )<br/>
+    // I2C pins for AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
+    #if ANY(NO_EEPROM_SELECTED, I2C_EEPROM)
+      #define I2C_EEPROM
+      #define MARLIN_EEPROM_SIZE              0x1000  // 4K
+      #define I2C_SCL_PIN                       PB6
+      #define I2C_SDA_PIN                       PB7 
+    #endif
 
-// -------------------------------------------------- //
-Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
-
-  I2C_SCL_PIN PB6 // I2C PINS AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
-  I2C_SDA_PIN PB7 // I2C PINS AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
 
   SERVO0_PIN PA8 // ENABLE FOR BLTOUCH SERVO
 
@@ -215,3 +211,37 @@ Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
  EXP2_06_PIN PA7  // SPI1 MOSI
  EXP2_07_PIN PE12 // SPI1_RESET
 
+### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3.h
+    // SPI connection for TMC2130, TMC2160, TMC5130, TMC5160, TMC2660
+    #ifndef X_CS_PIN
+       #define X_CS_PIN                         PD5
+    #endif
+    #ifndef Y_CS_PIN
+      #define Y_CS_PIN                          PD7
+    #endif
+    #ifndef Z_CS_PIN
+      #define Z_CS_PIN                          PD4
+    #endif
+    #ifndef E0_CS_PIN
+      #define E0_CS_PIN                         PD9
+    #endif
+    #ifndef E1_CS_PIN                                  
+       #define E1_CS_PIN                        PD8   
+    #endif
+
+    // This board only supports SW SPI for stepper drivers
+    #if HAS_TMC_SPI
+       #define TMC_USE_SW_SPI
+    #endif
+    #if !defined(TMC_SPI_MOSI) || TMC_SPI_MOSI == -1
+       #undef TMC_SPI_MOSI
+       #define TMC_SPI_MOSI                      PD14
+    #endif
+    #if !defined(TMC_SPI_MISO) || TMC_SPI_MISO == -1
+       #undef TMC_SPI_MISO
+       #define TMC_SPI_MISO                      PD1
+    #endif
+    #if !defined(TMC_SPI_SCK) || TMC_SPI_SCK == -1
+      #undef TMC_SPI_SCK
+      #define TMC_SPI_SCK                       PD0
+    #endif
