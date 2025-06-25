@@ -237,9 +237,6 @@ board             = marlin_STM32F407VET6_CCM
 #endif
 ```
 
-
-
-
 ```
 //
 // Heaters / Fans
@@ -252,12 +249,32 @@ board             = marlin_STM32F407VET6_CCM
 #define FAN1_PIN                            PB1   // FAN1`
 ```
 
+```
+//
+// Misc. Functions
+//
+#if HAS_TFT_LVGL_UI
+  #ifndef FIL_RUNOUT_PIN
+    #define FIL_RUNOUT_PIN                  PA4   // MT_DET_1
+  #endif
+  #ifndef FIL_RUNOUT2_PIN
+    #define FIL_RUNOUT2_PIN                 PE6   // MT_DET_2
+  #endif
+  #ifndef FIL_RUNOUT_STATE
+    #define FIL_RUNOUT_STATE                LOW
+  #endif
+#endif
+
+#ifndef POWER_LOSS_PIN
+  #define POWER_LOSS_PIN                    PA13  // PW_DET
+
+//#define SUICIDE_PIN                       PB2
+//#define LED_PIN                           PB2
+//#define KILL_PIN                          PA2
+//#define KILL_PIN_STATE                    LOW
+```
 
 
-  FIL_RUNOUT_PIN  PA4   // MT_DET_1 IF HAS_TFT_LVGL_UI
-  FIL_RUNOUT2_PIN PE6   // MT_DET_2 IF HAS_TFT_LVGL_UI
-
-  POWER_LOSS_PIN PA13  // PW_DET  
 
   WIFI_IO0_PIN   PC13 // IF ENABLED(MKS_WIFI_MODULE) ASSIGN MKS_WIFI_MODULE_SERIAL 1  // USART1 AND MKS_WIFI_MODULE_SPI 2  // SPI2 ELSE WIFI_SERIAL_PORT 3  // USART3
   WIFI_IO1_PIN   PC7  // IF ENABLED(MKS_WIFI_MODULE) ASSIGN MKS_WIFI_MODULE_SERIAL 1  // USART1 AND MKS_WIFI_MODULE_SPI 2  // SPI2 ELSE WIFI_SERIAL_PORT 3  // USART3
