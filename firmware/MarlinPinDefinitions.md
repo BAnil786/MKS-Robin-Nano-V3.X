@@ -1,58 +1,64 @@
 ### ini/stm32f4.ini
 
+All MKS Robin Nano V3 is built upon stm32_variant MARLIN_F4x7Vx
 
->   MKS Robin Nano V3 <br/>
 
-[env:mks_robin_nano_v3]<br/>
-extends                     = stm32_variant<br/>
-board                       = marlin_STM32F407VGT6_CCM<br/>
-board_build.variant         = MARLIN_F4x7Vx // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx<br/>
-board_build.offset          = 0xC000<br/>
-board_upload.offset_address = 0x0800C000<br/>
-board_build.rename          = Robin_nano_v3.bin<br/>
-build_flags                 = $ \{stm32_variant.build_flags\} $\{stm32f4_I2C1.build_flags\} <br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                               -DHAL_PCD_MODULE_ENABLED<br/>
-debug_tool                  = jlink<br/>
-upload_protocol             = jlink<br/>
+```
+// MKS Robin Nano V3
+
+[env:mks_robin_nano_v3]
+extends                     = stm32_variant
+board                       = marlin_STM32F407VGT6_CCM
+board_build.variant         = MARLIN_F4x7Vx // ALL NANO SETUPS EXTEND ON THIS \buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx
+board_build.offset          = 0xC000
+board_upload.offset_address = 0x0800C000
+board_build.rename          = Robin_nano_v3.bin
+build_flags                 = $ \{stm32_variant.build_flags\} $\{stm32f4_I2C1.build_flags\} 
+				-DHAL_PCD_MODULE_ENABLED
+debug_tool                  = jlink
+upload_protocol             = jlink
   
-  > MKS Robin Nano V3 with USB Flash Drive Support<br/>
+// MKS Robin Nano V3 with USB Flash Drive Support
   
-  [env:mks_robin_nano_v3_usb_flash_drive]<br/>
-  extends           = env:mks_robin_nano_v3<br/>
-  platform_packages = $\{stm_flash_drive.platform_packages}<br/>
-  build_flags       = $\{stm_flash_drive.build_flags} $\{stm32f4_I2C1.build_flags}<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                     -DUSE_USBHOST_HS<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_IRQ_PRIO=5<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_IRQ_SUBPRIO=6<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSE_USB_HS_IN_FS<br/>
+[env:mks_robin_nano_v3_usb_flash_drive]
+extends           = env:mks_robin_nano_v3
+platform_packages = $\{stm_flash_drive.platform_packages}
+build_flags       = $\{stm_flash_drive.build_flags} $\{stm32f4_I2C1.build_flags}
+			-DUSE_USBHOST_HS
+			-DUSBD_IRQ_PRIO=5
+			-DUSBD_IRQ_SUBPRIO=6
+			-DUSE_USB_HS_IN_FS
   
 
-> MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
+// MKS Robin Nano V3 with USB Flash Drive Support and Shared Media
  
-[env:mks_robin_nano_v3_usb_flash_drive_msc]<br/>
-extends           = env:mks_robin_nano_v3_usb_flash_drive<br/>
-build_flags       = $\{env:mks_robin_nano_v3_usb_flash_drive.build_flags}<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_USE_CDC_MSC<br/>
-build_unflags     = $\{env:mks_robin_nano_v3_usb_flash_drive.build_unflags}<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                      -DUSBD_USE_CDC<br/>
+[env:mks_robin_nano_v3_usb_flash_drive_msc]
+extends           = env:mks_robin_nano_v3_usb_flash_drive
+build_flags       = $\{env:mks_robin_nano_v3_usb_flash_drive.build_flags}
+			-DUSBD_USE_CDC_MSC
+build_unflags     = $\{env:mks_robin_nano_v3_usb_flash_drive.build_unflags}
+			-DUSBD_USE_CDC
 
-> MKS Robin Nano V3_1
+// MKS Robin Nano V3_1
 
-[env:mks_robin_nano_v3_1]<br/>
-extends           = env:mks_robin_nano_v3<br/>
-board             = marlin_STM32F407VET6_CCM<br/>
+[env:mks_robin_nano_v3_1]
+extends           = env:mks_robin_nano_v3
+board             = marlin_STM32F407VET6_CCM
   
- > MKS Robin Nano V3.1 with USB Flash Drive Support
+// MKS Robin Nano V3.1 with USB Flash Drive Support
  
-[env:mks_robin_nano_v3_1_usb_flash_drive]<br/>
-extends           = env:mks_robin_nano_v3_usb_flash_drive<br/>
+[env:mks_robin_nano_v3_1_usb_flash_drive]
+extends           = env:mks_robin_nano_v3_usb_flash_drive
 board             = marlin_STM32F407VET6_CCM
 
-> MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
+// MKS Robin Nano V3.1 with USB Flash Drive Support and Shared Media
 
-[env:mks_robin_nano_v3_1_usb_flash_drive_msc]<br/>
-extends           = env:mks_robin_nano_v3_usb_flash_drive_msc<br/>
-board             = marlin_STM32F407VET6_CCM<br/>
+[env:mks_robin_nano_v3_1_usb_flash_drive_msc]
+extends           = env:mks_robin_nano_v3_usb_flash_drive_msc
+board             = marlin_STM32F407VET6_CCM
+```
+
+
 
 ### buildroot\share\PlatformIO\variants\MARLIN_F4x7Vx\PeripheralPins.c
 
@@ -124,56 +130,129 @@ board             = marlin_STM32F407VET6_CCM<br/>
 
 ### Marlin/src/pins/stm32f4/pins_MKS_ROBIN_NANO_V3_common.h
 
-
+    //
     // I2C pins for AT24C32D I2C-Compatible (2-Wire) Serial EEPROM 32-Kbit (4096 x 8)
+    //
     #if ANY(NO_EEPROM_SELECTED, I2C_EEPROM)
       #define I2C_EEPROM
       #define MARLIN_EEPROM_SIZE              0x1000  // 4K
       #define I2C_SCL_PIN                       PB6
       #define I2C_SDA_PIN                       PB7 
     #endif
+    
 
 
-  SERVO0_PIN PA8 // ENABLE FOR BLTOUCH SERVO
+```
+//
+// Servos
+//
+// if further servos are defined add the pins here as #define SERVOX_PIN YYY
+#define SERVO0_PIN                          PA8   // Enable for BLTOUCH Servo
+```
 
-  X_DIAG_PIN  PA15 // ALSO ASSIGNED TO X_STOP_PIN
-  Y_DIAG_PIN  PD2  // ALSO ASSIGNED TO Y_STOP_PIN
-  Z_DIAG_PIN  PC8  // ALSO ASSIGNED TO Z_MIN_PIN
-  E0_DIAG_PIN PC4 // ALSO ASSIGNED TO Z_MAX_PIN
-  E1_DIAG_PIN PE7
+```
+//
+// Limit Switches
+//
+#define X_DIAG_PIN                          PA15 // exposed in J17
+#define Y_DIAG_PIN                          PD2  // exposed in J17
+#define Z_DIAG_PIN                          PC8  // exposed in J17
+#define E0_DIAG_PIN                         PC4  // exposed in J17
+#define E1_DIAG_PIN                         PE7  // exposed in J17
 
-  X_ENABLE_PIN   PE4  //            /--> ENABLE PIN
-  X_STEP_PIN     PE3  // X STEPPER  |--> STEP PIN
-  X_DIR_PIN      PE2  //            \--> DIRECTION PIN
-  Y_ENABLE_PIN   PE1  //            /--> ENABLE PIN
-  Y_STEP_PIN     PE0  // Y STEPPER  |--> STEP PIN
-  Y_DIR_PIN      PB9  //            \--> DIRECTION PIN
-  Z_ENABLE_PIN   PB8  //            /--> ENABLE PIN
-  Z_STEP_PIN     PB5  // Z STEPPER  |--> STEP PIN
-  Z_DIR_PIN      PB4  //            \--> DIRECTION PIN
-  E0_ENABLE_PIN  PB3  //            /--> ENABLE PIN
-  E0_STEP_PIN    PD6  // E0 STEPPER |--> STEP PIN
-  E0_DIR_PIN     PD3  //            \--> DIRECTION PIN
-  E1_ENABLE_PIN  PA3  //            /--> ENABLE PIN
-  E1_STEP_PIN    PD15 // E1 STEPPER |--> STEP PIN
-  E1_DIR_PIN     PA1  //            \--> DIRECTION PIN
+#define X_STOP_PIN                    X_DIAG_PIN
+#define Y_STOP_PIN                    Y_DIAG_PIN
+#define Z_MIN_PIN                     Z_DIAG_PIN
+#define Z_MAX_PIN                    E0_DIAG_PIN
+```
 
-  X_SERIAL_TX_PIN  PD5 // TX = RX PIN FOR X STEPPER IF HAS_TMC_UART  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  Y_SERIAL_TX_PIN  PD7 // TX = RX PIN FOR Y STEPPER IF HAS_TMC_UART  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  Z_SERIAL_TX_PIN  PD4 // TX = RX PIN FOR Z STEPPER IF HAS_TMC_UART  ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  E0_SERIAL_TX_PIN PD9 // TX = RX PIN FOR E0 STEPPER IF HAS_TMC_UART ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
-  E1_SERIAL_TX_PIN PD8 // TX = RX PIN FOR E1 STEPPER IF HAS_TMC_UART ** FOR MARLIN 2.1.3 UART FOR 2208 AND 2209 --> Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
+```
+//
+// Steppers
+//
+#define X_ENABLE_PIN                        PE4
+#define X_STEP_PIN                          PE3
+#define X_DIR_PIN                           PE2
+	
+#define Y_ENABLE_PIN                        PE1
+#define Y_STEP_PIN                          PE0
+#define Y_DIR_PIN                           PB9
+	
+#define Z_ENABLE_PIN                        PB8
+#define Z_STEP_PIN                          PB5
+#define Z_DIR_PIN                           PB4
+	
+#define E0_ENABLE_PIN                       PB3
+#define E0_STEP_PIN                         PD6
+#define E0_DIR_PIN                          PD3
 
-  TEMP_0_PIN   PC1   // PIN FOR HOTEND 1 SENSOR 
-  TEMP_1_PIN   PA2   // PIN FOR HOTEND 2 SENSOR; CAN BE ASSIGNED TO TEMP_PROBE_PIN OR TEMP_CHAMBER_PIN IF HOTENDS == 1 && !REDUNDANT_TEMP_MATCH(SOURCE, E1)
-  TEMP_BED_PIN PC0   // TB1
+//#define E1_ENABLE_PIN                     PA3  // LAB commented out
+//#define E1_STEP_PIN                       PD15 // LAB commented out
+//#defineE1_DIR_PIN                         PA1  // LAB commented out
+	
+#define Z2_ENABLE_PIN                       PA3  // LAB revised for second independent Z servo
+#define Z2_STEP_PIN                         PD15 // LAB revised for second independent Z servo
+#define Z2_DIR_PIN                          PA1  // LAB revised for second independent Z servo
 
-  HEATER_0_PIN   PE5   // HEATER1
-  HEATER_1_PIN   PB0   // HEATER2
-  HEATER_BED_PIN PA0   // HOT BED
 
-  FAN0_PIN PC14  // FAN
-  FAN1_PIN PB1   // FAN1
+
+#if HAS_TMC_UART
+//
+// Software serial
+// No Hardware serial for steppers
+// For 2208 and 2209 Marlin uses UART by default
+// Marlin/src/core/drivers.h AXIS_HAS_UART(A) ( AXIS_DRIVER_TYPE(A,TMC2208) || AXIS_DRIVER_TYPE(A,TMC2209) )
+	#define X_SERIAL_TX_PIN                   PD5
+	#define Y_SERIAL_TX_PIN                   PD7
+	#define Z_SERIAL_TX_PIN                   PD4
+	#define E0_SERIAL_TX_PIN                  PD9
+	//#define E1_SERIAL_TX_PIN                PD8 // LAB commented out
+	#define Z2_SERIAL_TX_PIN                  PD8 // LAB revised for second independent Z servo
+	
+	// Reduce baud rate to improve software serial reliability
+	#ifndef TMC_BAUD_RATE
+		#define TMC_BAUD_RATE                  19200
+	#endif
+#endif // HAS_TMC_UART
+```
+
+
+
+
+
+```
+//
+// Temperature Sensors
+//
+#define TEMP_0_PIN                          PC1   // PIN FOR HOTEND 1 SENSOR; exposed in TH1
+#define TEMP_1_PIN                          PA2   // PIN FOR HOTEND 2 SENSOR; CAN BE ASSIGNED TO TEMP_PROBE_PIN OR TEMP_CHAMBER_PIN; exposed in TH2
+#define TEMP_BED_PIN                        PC0   // PIN FOR BED SENSOR; exposed in TB1
+	
+#if HOTENDS == 1 && !REDUNDANT_TEMP_MATCH(SOURCE, E1)
+	#if TEMP_SENSOR_PROBE
+		#define TEMP_PROBE_PIN            TEMP_1_PIN
+	#elif TEMP_SENSOR_CHAMBER
+		#define TEMP_CHAMBER_PIN          TEMP_1_PIN
+	#endif
+#endif
+```
+
+
+
+
+```
+//
+// Heaters / Fans
+//
+#define HEATER_0_PIN                        PE5   // HEATER1
+#define HEATER_1_PIN                        PB0   // HEATER2
+#define HEATER_BED_PIN                      PA0   // HOT BED
+
+#define FAN0_PIN                            PC14  // FAN
+#define FAN1_PIN                            PB1   // FAN1`
+```
+
+
 
   FIL_RUNOUT_PIN  PA4   // MT_DET_1 IF HAS_TFT_LVGL_UI
   FIL_RUNOUT2_PIN PE6   // MT_DET_2 IF HAS_TFT_LVGL_UI
